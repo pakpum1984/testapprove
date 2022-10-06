@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <base target="_top">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>testระบบอนุมัติ</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+  <style>
+ @import url('https://fonts.googleapis.com/css?family=Prompt:400,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+} 
+nav{
+  display: flex;
+  height: 50px;
+  width: 100%;
+  background: blue;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+  flex-wrap: wrap;
+}
+.m{
+font-weight: bold;
+}
+nav .logo{
+  color: #fff;
+  font-size: 25px;
+  font-weight: 600;
+}
+nav ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+nav ul li{
+  margin: 0 5px;
+}
+nav ul li a{
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  line-height: 50px;
+}
+nav ul li a.active,
+nav ul li a:hover{
+  color: #111;
+  background: #fff;
+}
+nav .menu-btn i{
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+}
+input[type="checkbox"]{
+  display: none;
+}
+@media (max-width: 1000px){
+  nav{
+    padding: 0 20px 0 20px;
+  }
+}
+@media (max-width: 920px) {
+  nav .menu-btn i{
+    display: block;
+  }
+  #click:checked ~ .menu-btn i:before{
+    content: "\f00d";
+  }
+  nav ul{
+    font-size: 25px;
+    position: fixed;
+    top: 50px;
+    left: -100%;
+    background: #000000;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: block;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+  }
+  #click:checked ~ ul{
+    left: 0;
+  }
+  nav ul li{
+    width: 100%;
+    margin: 10px 0;
+  }
+  nav ul li a{
+    width: 100%;
+    margin-left: -100%;
+    display: block;
+    font-size: 20px;
+    transition: 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  #click:checked ~ ul li a{
+    margin-left: -15px;
+  }
+  nav ul li a.active,
+  nav ul li a:hover{
+    background: none;
+    color: cyan;
+  }
+}
+.content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: -1;
+  width: 100%;
+  padding: 0 30px;
+  color: #1b1b1b;
+}
+.content div{
+  font-size: 40px;
+  font-weight: 700;
+}
+     #loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: block;
+  opacity: 0.7;
+  background-color: #BEBEBE;
+  z-index: 99;
+  text-align: center;
+  font-size: 13px;
+  color: #000000;
+    }
+div.spinner {
+  top: 45;
+  left: 50;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  margin-left: 42%;
+  margin-right: 50%;
+  background: #000000;
+  opacity: 0.8;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+div.spinner div {
+  width: 6%;
+  height: 16%;
+  background: #FFF;
+  position: absolute;
+  left: 48%;
+  top: 41%;
+  opacity: 0;
+  -webkit-border-radius: 50px;
+  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  -webkit-animation: fade 1s linear infinite;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: 1;}
+  to {opacity: 0.25;}
+}
+
+div.spinner div.bar1 {
+  -webkit-transform:rotate(0deg) translate(0, -130%);
+  -webkit-animation-delay: 0s;
+}    
+
+div.spinner div.bar2 {
+  -webkit-transform:rotate(30deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.9167s;
+}
+div.spinner div.bar3 {
+  -webkit-transform:rotate(60deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.833s;
+}
+      div.spinner div.bar4 {
+  -webkit-transform:rotate(90deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.7497s;
+}
+div.spinner div.bar5 {
+  -webkit-transform:rotate(120deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.667s;
+}
+div.spinner div.bar6 {
+  -webkit-transform:rotate(150deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.5837s;
+}
+div.spinner div.bar7 {
+  -webkit-transform:rotate(180deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.5s;
+}
+div.spinner div.bar8 {
+  -webkit-transform:rotate(210deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.4167s;
+}
+div.spinner div.bar9 {
+  -webkit-transform:rotate(240deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.333s;
+}
+div.spinner div.bar10 {
+  -webkit-transform:rotate(270deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.2497s;
+}
+div.spinner div.bar11 {
+  -webkit-transform:rotate(300deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.167s;
+}
+div.spinner div.bar12 {
+  -webkit-transform:rotate(330deg) translate(0, -130%); 
+  -webkit-animation-delay: -0.0833s;
+}
+
+  </style>
+   <body>
+      <div id="loading">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+      <div class="spinner">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+  <div class="bar4"></div>
+  <div class="bar5"></div>
+  <div class="bar6"></div>
+  <div class="bar7"></div>
+  <div class="bar8"></div>
+  <div class="bar9"></div>
+  <div class="bar10"></div>
+  <div class="bar11"></div>
+  <div class="bar12"></div>
+</div>
+</div>
+      <nav class="fixed-top">
+         <div class="logo">
+            ระบบอนุมัติ
+         </div>
+         <input type="checkbox" id="click">
+         <label for="click" class="menu-btn">
+            <i class="fas fa-bars"></i>
+         </label>
+          <ul>
+             <li><a style="color: #fff; font-size: 24px;">เลือกรายการ</a></li>
+            <li id="bt1"><a style="color: #fff">หน้าอนุมัติ</a></li>
+            <li id="bt2"><a  href="https://pakpum1984.github.io/User2022/"style="color: #fff">ระบบจองรถ</a></li>
+<!--             <li id="bt3"><a style="color: #fff">จองรถฝากงาน</a></li>
+            <li id="bt4"><a style="color: #fff">จองรถขับไปเอง</a></li>
+            <li id="bt5"><a style="color: #fff">รายการที่อนุมัติแล้ว</a></li> -->
+         </ul>
+      </nav>
+     
+     <section id="p1" style="display:none">
+      <body>
+    <iframe src="https://script.google.com/macros/s/AKfycbzfIPrjKqRPzFBrRQT5EZIh8JwxUI5eWDM6AYFZ_c7W9-tOh-QD2xP8Q6E23EqXpy8ybg/exec"height="800px" width="100%"frameborder="0"scrolling="yes" align="center">
+        </iframe>
+       </body>
+  </section>
+      
+<!--  <section id="p2" style="display:none">
+      <body>
+    <iframe src="https://script.google.com/macros/s/AKfycbxKmCwaZY0nzrsgWWKibP0AA5CKBLmLL_Z2o3hozKEJtOEKheMTo4RyQH6_XKcDgd5jOw/exec"height="800px" width="100%"frameborder="0"scrolling="yes" align="center">
+        </iframe>
+       </body>
+  </section>
+      
+       <section id="p3" style="display:none">
+      <body>
+    <iframe src="https://script.google.com/macros/s/AKfycbwS4O5FzXwNF2A0BQfV-24kC0r0JvdBxcXE5nCgiLBGCAKuZKR3itwVr3n7a_KGeh48/exec"height="800px" width="100%"frameborder="0"scrolling="yes" align="center">
+        </iframe>
+       </body>
+  </section>
+  
+  <section id="p4" style="display:none">
+      <body>
+    <iframe src="https://script.google.com/macros/s/AKfycbwkddhB0ghE6gr7BYso_4foZVNaflRQ7gtHqNEEUJkNCvAIu7LFpZMPmOInz4TnJhvF/exec"height="800px" width="100%"frameborder="0"scrolling="yes" align="center">
+        </iframe>
+       </body>
+  </section>
+      
+       <section id="p5" style="display:none">
+     <body>
+        <br>
+        <br>
+      <iframe src="https://script.google.com/macros/s/AKfycbxMVEC6sNB0zsPbEOFMKSHhi8yGMfgbqSj5xcxClesV_A49W75t4PVGpDRc8avjsnwORg/exec"height="800px" width="100%"frameborder="0"scrolling="yes" align="center">
+        </iframe>
+    </body>
+  </section> -->
+   
+    <script>
+      document.getElementById('p1').style.display='block'
+      document.getElementById('p2').style.display='none'
+//       document.getElementById('p3').style.display='none'
+//       document.getElementById('p4').style.display='none'
+//       document.getElementById('p5').style.display='none'
+      
+       document.getElementById('bt1').addEventListener('click',()=>{
+          event.preventDefault()
+        document.getElementById('p1').style.display='block'
+        document.getElementById('p2').style.display='none'
+//         document.getElementById('p3').style.display='none'
+//         document.getElementById('p4').style.display='none'
+//         document.getElementById('p5').style.display='none'
+        document.getElementById('click').click()
+        })
+
+        document.getElementById('bt2').addEventListener('click',()=>{
+          event.preventDefault()
+        document.getElementById('p2').style.display='block'
+        document.getElementById('p1').style.display='none'
+//         document.getElementById('p3').style.display='none'
+//         document.getElementById('p4').style.display='none'
+//         document.getElementById('p5').style.display='none'
+        document.getElementById('click').click()
+        })
+
+//         document.getElementById('bt3').addEventListener('click',()=>{
+//            event.preventDefault()
+//         document.getElementById('p3').style.display='block'
+//         document.getElementById('p2').style.display='none'
+//         document.getElementById('p1').style.display='none'
+//         document.getElementById('p4').style.display='none'
+//          document.getElementById('p5').style.display='none'
+//          document.getElementById('click').click()
+//          })
+
+//         document.getElementById('bt4').addEventListener('click',()=>{
+//           event.preventDefault()
+//         document.getElementById('p4').style.display='block'
+//         document.getElementById('p3').style.display='none'
+//         document.getElementById('p2').style.display='none'
+//         document.getElementById('p1').style.display='none'
+//         document.getElementById('p5').style.display='none'
+//         document.getElementById('click').click()
+//         })
+       
+//        document.getElementById('bt5').addEventListener('click',()=>{
+//           event.preventDefault()
+//         document.getElementById('p5').style.display='block'
+//         document.getElementById('p4').style.display='none'
+//         document.getElementById('p3').style.display='none'
+//         document.getElementById('p2').style.display='none'
+//         document.getElementById('p1').style.display='none'
+//         document.getElementById('click').click()
+//         })
+      </script>
+       <script>
+  $(window).load(function() {
+    $('#loading').hide();
+  });
+</script>
+      </body>
+</html>
