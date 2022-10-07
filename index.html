@@ -138,7 +138,25 @@ input[type="checkbox"]{
   font-size: 40px;
   font-weight: 700;
 }
-     #loading {
+     #clock {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background-color: #000000;
+  opacity: 0.7;
+	margin: auto;
+}
+
+span {
+	display: block;
+  color: #fff;
+	width: 100%;
+	margin: auto;
+	padding-top: 7px;
+	text-align: center;
+	font-size: 40px;
+}
+ #loading {
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -266,6 +284,10 @@ div.spinner div.bar12 {
   <div class="bar11"></div>
   <div class="bar12"></div>
 </div>
+         <div id="clock">
+	<span id="seconds">15</span>
+</div>
+ <p style="font-size:25px">กรุณารอสักครุ่.....</p>
 </div>
       <nav class="fixed-top">
          <div class="logo">
@@ -385,6 +407,17 @@ div.spinner div.bar12 {
 //         document.getElementById('p1').style.display='none'
 //         document.getElementById('click').click()
 //         })
+</script>
+      <script>
+        timeLeft = 15;
+function countdown() {
+	timeLeft--;
+	document.getElementById("seconds").innerHTML = String( timeLeft );
+	if (timeLeft > 0) {
+		setTimeout(countdown, 1000);
+	}
+};
+setTimeout(countdown, 1000);
 </script>
        <script>
   $(window).load(function() {
